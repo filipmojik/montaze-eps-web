@@ -721,62 +721,18 @@
                 </div>
                 <div class="contact-map">
                     <div class="map-container">
-                        <svg viewBox="0 0 600 450" xmlns="http://www.w3.org/2000/svg" class="region-map">
-                            <defs>
-                                <pattern id="hatch" patternUnits="userSpaceOnUse" width="8" height="8"
-                                    patternTransform="rotate(45)">
-                                    <line x1="0" y1="0" x2="0" y2="8" stroke="rgba(59,130,246,0.15)"
-                                        stroke-width="1.5" />
-                                </pattern>
-                                <linearGradient id="mapGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" style="stop-color:#eff6ff" />
-                                    <stop offset="100%" style="stop-color:#dbeafe" />
-                                </linearGradient>
-                                <filter id="mapShadow" x="-5%" y="-5%" width="110%" height="110%">
-                                    <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="rgba(0,0,0,0.1)" />
-                                </filter>
-                            </defs>
-                            <!-- Moravskoslezský kraj outline -->
-                            <g transform="translate(60, 30) scale(1.1)" filter="url(#mapShadow)">
-                                <path
-                                    d="M120,20 L160,8 L200,15 L240,5 L280,12 L310,8 L350,18 L380,35 L400,55 L420,80 L430,110 L425,145 L410,175 L395,200 L380,225 L365,250 L340,270 L310,285 L280,295 L250,305 L220,310 L185,305 L155,295 L130,280 L110,260 L95,235 L80,208 L70,180 L65,150 L68,120 L75,90 L85,65 L100,42 Z"
-                                    fill="url(#mapGrad)" stroke="var(--blue-400)" stroke-width="2" />
-                                <path
-                                    d="M120,20 L160,8 L200,15 L240,5 L280,12 L310,8 L350,18 L380,35 L400,55 L420,80 L430,110 L425,145 L410,175 L395,200 L380,225 L365,250 L340,270 L310,285 L280,295 L250,305 L220,310 L185,305 L155,295 L130,280 L110,260 L95,235 L80,208 L70,180 L65,150 L68,120 L75,90 L85,65 L100,42 Z"
-                                    fill="url(#hatch)" />
-                                <!-- Cities -->
-                                <circle cx="300" cy="130" r="6" fill="var(--blue-600)" />
-                                <text x="300" y="115" text-anchor="middle" font-family="Inter,sans-serif" font-size="13"
-                                    font-weight="700" fill="var(--gray-800)">Ostrava</text>
-                                <circle cx="200" cy="200" r="4" fill="var(--blue-500)" />
-                                <text x="200" y="220" text-anchor="middle" font-family="Inter,sans-serif" font-size="11"
-                                    font-weight="500" fill="var(--gray-600)">Frýdek-Místek</text>
-                                <circle cx="160" cy="140" r="4" fill="var(--blue-500)" />
-                                <text x="160" y="130" text-anchor="middle" font-family="Inter,sans-serif" font-size="11"
-                                    font-weight="500" fill="var(--gray-600)">Opava</text>
-                                <circle cx="350" cy="180" r="4" fill="var(--blue-500)" />
-                                <text x="350" y="200" text-anchor="middle" font-family="Inter,sans-serif" font-size="11"
-                                    font-weight="500" fill="var(--gray-600)">Karviná</text>
-                                <circle cx="130" cy="230" r="4" fill="var(--blue-500)" />
-                                <text x="130" y="250" text-anchor="middle" font-family="Inter,sans-serif" font-size="11"
-                                    font-weight="500" fill="var(--gray-600)">Bruntál</text>
-                                <circle cx="260" cy="260" r="4" fill="var(--blue-500)" />
-                                <text x="260" y="280" text-anchor="middle" font-family="Inter,sans-serif" font-size="11"
-                                    font-weight="500" fill="var(--gray-600)">Nový Jičín</text>
-                            </g>
-                            <!-- Label -->
-                            <text x="300" y="420" text-anchor="middle" font-family="Inter,sans-serif" font-size="14"
-                                font-weight="600" fill="var(--blue-600)" letter-spacing="0.05em">MORAVSKOSLEZSKÝ
-                                KRAJ</text>
-                        </svg>
-                        <div class="map-badge">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d330000!2d18.0!3d49.8!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1scs!2scz"
+                            width="100%" height="100%" style="border:0; border-radius: 16px; min-height: 400px;"
+                            allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        <div class="map-overlay-badge">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
                                 <path
                                     d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
                                     stroke="currentColor" stroke-width="1.5" />
                                 <path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" stroke="currentColor" stroke-width="1.5" />
                             </svg>
-                            Působíme v celém kraji
+                            Moravskoslezský kraj
                         </div>
                     </div>
                 </div>
