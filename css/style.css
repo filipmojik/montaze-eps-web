@@ -226,12 +226,13 @@ h3 {
 
 .logo-subtitle {
     display: inline-block;
-    color: var(--white);
+    color: var(--gray-900);
     font-size: 0.65rem;
     font-weight: 600;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    border: 1.5px solid rgba(255, 255, 255, 0.5);
+    background: var(--white);
+    border: 1.5px solid var(--white);
     border-radius: 4px;
     padding: 2px 8px;
     text-align: center;
@@ -243,8 +244,9 @@ h3 {
 }
 
 .navbar.scrolled .logo-subtitle {
-    color: var(--gray-700);
-    border-color: var(--gray-300);
+    color: var(--gray-900);
+    background: var(--gray-100);
+    border-color: var(--gray-200);
 }
 
 .footer .logo-text {
@@ -252,8 +254,9 @@ h3 {
 }
 
 .footer .logo-subtitle {
-    color: rgba(255, 255, 255, 0.7);
-    border-color: rgba(255, 255, 255, 0.3);
+    color: var(--gray-900);
+    background: var(--white);
+    border-color: var(--white);
 }
 
 /* ===================================
@@ -304,8 +307,9 @@ h3 {
 }
 
 .navbar.menu-open .logo-subtitle {
-    color: rgba(255, 255, 255, 0.7);
-    border-color: rgba(255, 255, 255, 0.4);
+    color: var(--gray-900);
+    background: var(--white);
+    border-color: var(--white);
 }
 
 .navbar.menu-open .hamburger span {
@@ -1288,10 +1292,12 @@ h3 {
     padding: 0;
 }
 
-.region-map {
+.region-map-img {
     width: 100%;
-    max-width: 500px;
     height: auto;
+    display: block;
+    border-radius: 12px;
+    object-fit: contain;
 }
 
 .map-badge {
@@ -1746,7 +1752,8 @@ h3 {
     /* Hero mobile optimization - everything visible above fold */
     .hero {
         padding: 80px 0 40px;
-        min-height: auto;
+        min-height: 100vh;
+        min-height: 100dvh;
     }
 
     .hero-container {
@@ -1824,7 +1831,12 @@ h3 {
 
     .process-steps {
         flex-direction: column;
-        gap: 16px;
+        gap: 0;
+        align-items: center;
+    }
+
+    .process-step {
+        padding: 24px 20px;
     }
 
     .process-connector {
@@ -1859,14 +1871,7 @@ h3 {
     }
 
     .floating-cta {
-        bottom: 16px;
-        right: 16px;
-        left: 16px;
-    }
-
-    .floating-cta .btn {
-        width: 100%;
-        justify-content: center;
+        display: none !important;
     }
 
     .service-features-grid {
