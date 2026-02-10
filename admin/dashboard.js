@@ -44,7 +44,7 @@ async function checkAuth() {
     try {
         const { data: { session }, error } = await sb.auth.getSession();
         if (!session) {
-            window.location.href = 'login.html';
+            window.location.href = '/admin/login';
             return;
         }
         currentSession = session;
@@ -75,7 +75,7 @@ function initLogout() {
         logoutBtn.addEventListener('click', async (e) => {
             e.preventDefault();
             if (sb) await sb.auth.signOut();
-            window.location.href = 'login.html';
+            window.location.href = '/admin/login';
         });
         logoutLink.parentElement.appendChild(logoutBtn);
     }
