@@ -267,6 +267,34 @@ h3 {
     box-shadow: var(--shadow-sm);
 }
 
+/* When mobile menu is open, break out of stacking context */
+.navbar.menu-open {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--gray-950) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    border-bottom: none !important;
+    box-shadow: none !important;
+    z-index: 9999;
+    padding: 16px 0;
+}
+
+.navbar.menu-open .nav-container {
+    align-items: flex-start;
+}
+
+.navbar.menu-open .logo-text {
+    color: var(--white);
+}
+
+.navbar.menu-open .hamburger span {
+    background: var(--white);
+}
+
 .nav-container {
     display: flex;
     align-items: center;
@@ -1651,7 +1679,7 @@ h3 {
     }
 
     .hero-image-wrapper {
-        max-width: 200px;
+        max-width: 250px;
         padding: 0;
     }
 
@@ -1798,7 +1826,7 @@ h3 {
     }
 
     .hero-image-wrapper {
-        max-width: 170px;
+        max-width: 210px;
     }
 
     .hero h1 {

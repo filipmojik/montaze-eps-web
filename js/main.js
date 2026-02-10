@@ -22,11 +22,13 @@ document.addEventListener('DOMContentLoaded', () => {
     if (hamburger && navLinks) {
         const closeMenu = () => {
             navLinks.classList.remove('active');
+            navbar.classList.remove('menu-open');
             document.body.style.overflow = '';
         };
 
         const openMenu = () => {
             navLinks.classList.add('active');
+            navbar.classList.add('menu-open');
             document.body.style.overflow = 'hidden';
         };
 
