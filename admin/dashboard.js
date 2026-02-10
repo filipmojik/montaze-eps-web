@@ -1,14 +1,231 @@
 // ===================================
 // Admin Dashboard - Montáže EPS
+// With Supabase Auth + Real Data
 // ===================================
 
-document.addEventListener('DOMContentLoaded', () => {
+// --- Supabase Config ---
+const SUPABASE_URL = localStorage.getItem('sb_url') || 'YOUR_SUPABASE_URL';
+const SUPABASE_ANON_KEY = localStorage.getItem('sb_key') || 'YOUR_SUPABASE_ANON_KEY';
+
+let sb = null;
+let currentSession = null;
+
+// --- Init ---
+document.addEventListener('DOMContentLoaded', async () => {
+    // Init Supabase
+    if (SUPABASE_URL !== 'YOUR_SUPABASE_URL' && window.supabase) {
+        sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    }
+
+    // Check auth
+    await checkAuth();
+
     initNavigation();
     initDate();
     initCharts();
     initMobileMenu();
     initPeriodSelector();
+    initLogout();
+
+    // Load real data if Supabase is connected
+    if (sb && currentSession) {
+        await loadRealInquiries();
+        await loadInquiryStats();
+    }
 });
+
+// --- Authentication ---
+async function checkAuth() {
+    if (!sb) {
+        console.warn('Supabase not configured - running in demo mode');
+        return;
+    }
+
+    try {
+        const { data: { session }, error } = await sb.auth.getSession();
+        if (!session) {
+            window.location.href = 'login.html';
+            return;
+        }
+        currentSession = session;
+
+        // Update avatar with user initials
+        const email = session.user.email || '';
+        const initials = email.substring(0, 2).toUpperCase();
+        document.querySelectorAll('.topbar-avatar span, .mobile-avatar').forEach(el => {
+            el.textContent = initials;
+        });
+
+    } catch (err) {
+        console.error('Auth error:', err);
+    }
+}
+
+function initLogout() {
+    // Add logout to sidebar footer
+    const logoutLink = document.querySelector('.sidebar-footer .nav-item');
+    if (logoutLink && sb) {
+        const logoutBtn = document.createElement('a');
+        logoutBtn.href = '#';
+        logoutBtn.className = 'nav-item';
+        logoutBtn.innerHTML = `
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M13 3h3a1 1 0 011 1v12a1 1 0 01-1 1h-3M8 14l-4-4m0 0l4-4m-4 4h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Odhlásit se
+        `;
+        logoutBtn.addEventListener('click', async (e) => {
+            e.preventDefault();
+            if (sb) await sb.auth.signOut();
+            window.location.href = 'login.html';
+        });
+        logoutLink.parentElement.appendChild(logoutBtn);
+    }
+}
+
+// --- Load Real Data from Supabase ---
+async function loadRealInquiries() {
+    if (!sb || !currentSession) return;
+
+    try {
+        const { data: inquiries, error } = await sb
+            .from('inquiries')
+            .select('*')
+            .order('created_at', { ascending: false })
+            .limit(20);
+
+        if (error) throw error;
+        if (!inquiries || !inquiries.length) return;
+
+        // Update KPI - real inquiry count
+        const kpiInq = document.getElementById('kpiInquiries');
+        if (kpiInq) kpiInq.textContent = inquiries.length.toString();
+
+        // Update inquiry list in dashboard
+        const inquiryList = document.querySelector('.inquiry-list');
+        if (inquiryList) {
+            inquiryList.innerHTML = inquiries.map(inq => {
+                const timeAgo = getTimeAgo(new Date(inq.created_at));
+                const isNew = inq.status === 'new';
+                return `
+                    <div class="inquiry-item ${isNew ? 'new' : ''}">
+                        <div class="inquiry-header">
+                            <strong>${escapeHtml(inq.name)}</strong>
+                            <span class="inquiry-time">${timeAgo}</span>
+                        </div>
+                        <span class="inquiry-service">${escapeHtml(inq.service || 'Nespecifikováno')}</span>
+                        <p>${escapeHtml(inq.message || 'Bez zprávy')}</p>
+                        <div class="inquiry-contact">
+                            <span>${escapeHtml(inq.email)}</span>
+                            <span>${escapeHtml(inq.phone)}</span>
+                        </div>
+                        ${isNew ? `<button class="mark-read-btn" data-id="${inq.id}" onclick="markAsRead('${inq.id}')">Označit jako přečteno</button>` : ''}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Update services bar chart with real data
+        updateServicesChartWithRealData(inquiries);
+
+    } catch (err) {
+        console.error('Error loading inquiries:', err);
+    }
+}
+
+async function loadInquiryStats() {
+    if (!sb || !currentSession) return;
+
+    try {
+        // Count total inquiries
+        const { count: totalCount } = await sb
+            .from('inquiries')
+            .select('*', { count: 'exact', head: true });
+
+        // Count new inquiries
+        const { count: newCount } = await sb
+            .from('inquiries')
+            .select('*', { count: 'exact', head: true })
+            .eq('status', 'new');
+
+        // Update badge
+        const badge = document.querySelector('.badge');
+        if (badge && newCount > 0) {
+            badge.textContent = `${newCount} nových`;
+        }
+
+        // Update KPI
+        const kpiInq = document.getElementById('kpiInquiries');
+        if (kpiInq && totalCount) kpiInq.textContent = totalCount.toString();
+
+    } catch (err) {
+        console.error('Error loading stats:', err);
+    }
+}
+
+async function markAsRead(id) {
+    if (!sb || !currentSession) return;
+
+    try {
+        const { error } = await sb
+            .from('inquiries')
+            .update({ status: 'read', updated_at: new Date().toISOString() })
+            .eq('id', id);
+
+        if (error) throw error;
+
+        // Refresh data
+        await loadRealInquiries();
+        await loadInquiryStats();
+    } catch (err) {
+        console.error('Error:', err);
+    }
+}
+
+// Make markAsRead globally accessible
+window.markAsRead = markAsRead;
+
+function updateServicesChartWithRealData(inquiries) {
+    if (!servicesChart) return;
+
+    const serviceCounts = {};
+    inquiries.forEach(inq => {
+        const svc = inq.service || 'Jiné';
+        serviceCounts[svc] = (serviceCounts[svc] || 0) + 1;
+    });
+
+    const labels = Object.keys(serviceCounts);
+    const data = Object.values(serviceCounts);
+
+    if (labels.length > 0) {
+        servicesChart.data.labels = labels;
+        servicesChart.data.datasets[0].data = data;
+        servicesChart.data.datasets[0].backgroundColor = labels.map((_, i) =>
+            `rgba(59, 130, 246, ${0.8 - i * 0.1})`
+        );
+        servicesChart.update();
+    }
+}
+
+// --- Helpers ---
+function escapeHtml(str) {
+    if (!str) return '';
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+}
+
+function getTimeAgo(date) {
+    const now = new Date();
+    const diff = now - date;
+    const mins = Math.floor(diff / 60000);
+    const hours = Math.floor(diff / 3600000);
+    const days = Math.floor(diff / 86400000);
+
+    if (mins < 60) return `před ${mins} min`;
+    if (hours < 24) return `před ${hours} h`;
+    if (days === 1) return 'včera';
+    if (days < 7) return `před ${days} dny`;
+    return date.toLocaleDateString('cs-CZ');
+}
 
 // --- Navigation ---
 function initNavigation() {
@@ -38,7 +255,6 @@ function initNavigation() {
 
             pageTitle.textContent = sectionTitles[section] || 'Dashboard';
 
-            // Close mobile sidebar
             document.getElementById('sidebar').classList.remove('open');
             const overlay = document.querySelector('.sidebar-overlay');
             if (overlay) overlay.classList.remove('active');
@@ -59,7 +275,6 @@ function initMobileMenu() {
     const btn = document.getElementById('mobileMenuBtn');
     const sidebar = document.getElementById('sidebar');
 
-    // Create overlay
     const overlay = document.createElement('div');
     overlay.className = 'sidebar-overlay';
     document.body.appendChild(overlay);
@@ -85,6 +300,7 @@ function initPeriodSelector() {
 }
 
 function updateKPIs(period) {
+    // Demo data - will be replaced by real analytics once Vercel Analytics API is connected
     const data = {
         '7d': { visitors: '724', pageviews: '2,156', inquiries: '8', avgTime: '2m 05s', vChange: '+8.2 %', pChange: '+5.1 %', iChange: '+14.3 %', tChange: '+3.2 %' },
         '30d': { visitors: '2,847', pageviews: '8,432', inquiries: '34', avgTime: '2m 18s', vChange: '+12.5 %', pChange: '+8.3 %', iChange: '+23.1 %', tChange: '+5.7 %' },
@@ -95,7 +311,10 @@ function updateKPIs(period) {
     const d = data[period] || data['30d'];
     document.getElementById('kpiVisitors').textContent = d.visitors;
     document.getElementById('kpiPageviews').textContent = d.pageviews;
-    document.getElementById('kpiInquiries').textContent = d.inquiries;
+    // Don't override real inquiry count if loaded from Supabase
+    if (!sb || !currentSession) {
+        document.getElementById('kpiInquiries').textContent = d.inquiries;
+    }
     document.getElementById('kpiAvgTime').textContent = d.avgTime;
 
     const changes = document.querySelectorAll('.kpi-change');
@@ -125,23 +344,18 @@ function createTrafficChart() {
     const ctx = document.getElementById('trafficChart');
     if (!ctx) return;
 
-    const labels = getLast30DaysLabels();
-
     trafficChart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: labels,
+            labels: getLast30DaysLabels(),
             datasets: [
                 {
                     label: 'Návštěvníci',
                     data: generateTrafficData(30, 60, 140),
                     borderColor: '#3b82f6',
                     backgroundColor: 'rgba(59, 130, 246, 0.08)',
-                    borderWidth: 2,
-                    fill: true,
-                    tension: 0.4,
-                    pointRadius: 0,
-                    pointHoverRadius: 5,
+                    borderWidth: 2, fill: true, tension: 0.4,
+                    pointRadius: 0, pointHoverRadius: 5,
                     pointHoverBackgroundColor: '#3b82f6',
                 },
                 {
@@ -149,44 +363,26 @@ function createTrafficChart() {
                     data: generateTrafficData(30, 150, 380),
                     borderColor: '#22c55e',
                     backgroundColor: 'rgba(34, 197, 94, 0.05)',
-                    borderWidth: 2,
-                    fill: true,
-                    tension: 0.4,
-                    pointRadius: 0,
-                    pointHoverRadius: 5,
+                    borderWidth: 2, fill: true, tension: 0.4,
+                    pointRadius: 0, pointHoverRadius: 5,
                     pointHoverBackgroundColor: '#22c55e',
                 }
             ]
         },
         options: {
-            responsive: true,
-            maintainAspectRatio: false,
+            responsive: true, maintainAspectRatio: false,
             interaction: { intersect: false, mode: 'index' },
             plugins: {
                 legend: { display: false },
                 tooltip: {
-                    backgroundColor: '#0f172a',
-                    titleColor: '#fff',
-                    bodyColor: '#e2e8f0',
-                    borderColor: 'rgba(255,255,255,0.1)',
-                    borderWidth: 1,
-                    cornerRadius: 10,
-                    padding: 12,
-                    bodySpacing: 6,
+                    backgroundColor: '#0f172a', titleColor: '#fff', bodyColor: '#e2e8f0',
+                    borderColor: 'rgba(255,255,255,0.1)', borderWidth: 1,
+                    cornerRadius: 10, padding: 12, bodySpacing: 6,
                 }
             },
             scales: {
-                x: {
-                    grid: { display: false },
-                    ticks: { maxTicksLimit: 8, font: { size: 11 } },
-                    border: { display: false }
-                },
-                y: {
-                    grid: { color: 'rgba(0,0,0,0.04)', drawBorder: false },
-                    ticks: { font: { size: 11 } },
-                    border: { display: false },
-                    beginAtZero: true
-                }
+                x: { grid: { display: false }, ticks: { maxTicksLimit: 8, font: { size: 11 } }, border: { display: false } },
+                y: { grid: { color: 'rgba(0,0,0,0.04)', drawBorder: false }, ticks: { font: { size: 11 } }, border: { display: false }, beginAtZero: true }
             }
         }
     });
@@ -200,28 +396,11 @@ function createSourcesChart() {
         type: 'doughnut',
         data: {
             labels: ['Přímý přístup', 'Google', 'Sociální sítě', 'Ostatní'],
-            datasets: [{
-                data: [42, 31, 18, 9],
-                backgroundColor: ['#3b82f6', '#22c55e', '#a855f7', '#f59e0b'],
-                borderWidth: 0,
-                hoverOffset: 6
-            }]
+            datasets: [{ data: [42, 31, 18, 9], backgroundColor: ['#3b82f6', '#22c55e', '#a855f7', '#f59e0b'], borderWidth: 0, hoverOffset: 6 }]
         },
         options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            cutout: '70%',
-            plugins: {
-                legend: { display: false },
-                tooltip: {
-                    backgroundColor: '#0f172a',
-                    cornerRadius: 10,
-                    padding: 10,
-                    callbacks: {
-                        label: (ctx) => ` ${ctx.label}: ${ctx.raw} %`
-                    }
-                }
-            }
+            responsive: true, maintainAspectRatio: false, cutout: '70%',
+            plugins: { legend: { display: false }, tooltip: { backgroundColor: '#0f172a', cornerRadius: 10, padding: 10, callbacks: { label: (ctx) => ` ${ctx.label}: ${ctx.raw} %` } } }
         }
     });
 }
@@ -234,28 +413,11 @@ function createDevicesChart() {
         type: 'doughnut',
         data: {
             labels: ['Mobil', 'Desktop', 'Tablet'],
-            datasets: [{
-                data: [58, 34, 8],
-                backgroundColor: ['#3b82f6', '#22c55e', '#f59e0b'],
-                borderWidth: 0,
-                hoverOffset: 6
-            }]
+            datasets: [{ data: [58, 34, 8], backgroundColor: ['#3b82f6', '#22c55e', '#f59e0b'], borderWidth: 0, hoverOffset: 6 }]
         },
         options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            cutout: '70%',
-            plugins: {
-                legend: { display: false },
-                tooltip: {
-                    backgroundColor: '#0f172a',
-                    cornerRadius: 10,
-                    padding: 10,
-                    callbacks: {
-                        label: (ctx) => ` ${ctx.label}: ${ctx.raw} %`
-                    }
-                }
-            }
+            responsive: true, maintainAspectRatio: false, cutout: '70%',
+            plugins: { legend: { display: false }, tooltip: { backgroundColor: '#0f172a', cornerRadius: 10, padding: 10, callbacks: { label: (ctx) => ` ${ctx.label}: ${ctx.raw} %` } } }
         }
     });
 }
@@ -269,47 +431,17 @@ function createServicesChart() {
         data: {
             labels: ['CCTV', 'EPS', 'PZTS', 'Loxone', 'Wi-Fi', 'Videozvonky'],
             datasets: [{
-                label: 'Poptávky',
-                data: [12, 8, 5, 4, 3, 2],
-                backgroundColor: [
-                    'rgba(59, 130, 246, 0.8)',
-                    'rgba(59, 130, 246, 0.65)',
-                    'rgba(59, 130, 246, 0.5)',
-                    'rgba(59, 130, 246, 0.4)',
-                    'rgba(59, 130, 246, 0.3)',
-                    'rgba(59, 130, 246, 0.2)'
-                ],
-                borderRadius: 8,
-                borderSkipped: false,
-                barThickness: 36
+                label: 'Poptávky', data: [12, 8, 5, 4, 3, 2],
+                backgroundColor: ['rgba(59,130,246,0.8)', 'rgba(59,130,246,0.65)', 'rgba(59,130,246,0.5)', 'rgba(59,130,246,0.4)', 'rgba(59,130,246,0.3)', 'rgba(59,130,246,0.2)'],
+                borderRadius: 8, borderSkipped: false, barThickness: 36
             }]
         },
         options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: { display: false },
-                tooltip: {
-                    backgroundColor: '#0f172a',
-                    cornerRadius: 10,
-                    padding: 10,
-                    callbacks: {
-                        label: (ctx) => ` ${ctx.raw} poptávek`
-                    }
-                }
-            },
+            responsive: true, maintainAspectRatio: false,
+            plugins: { legend: { display: false }, tooltip: { backgroundColor: '#0f172a', cornerRadius: 10, padding: 10, callbacks: { label: (ctx) => ` ${ctx.raw} poptávek` } } },
             scales: {
-                x: {
-                    grid: { display: false },
-                    border: { display: false },
-                    ticks: { font: { size: 11, weight: '500' } }
-                },
-                y: {
-                    grid: { color: 'rgba(0,0,0,0.04)', drawBorder: false },
-                    border: { display: false },
-                    beginAtZero: true,
-                    ticks: { stepSize: 4, font: { size: 11 } }
-                }
+                x: { grid: { display: false }, border: { display: false }, ticks: { font: { size: 11, weight: '500' } } },
+                y: { grid: { color: 'rgba(0,0,0,0.04)', drawBorder: false }, border: { display: false }, beginAtZero: true, ticks: { stepSize: 4, font: { size: 11 } } }
             }
         }
     });
@@ -317,10 +449,8 @@ function createServicesChart() {
 
 function updateCharts(period) {
     if (!trafficChart) return;
-
     const dayMap = { '7d': 7, '30d': 30, '90d': 90, '12m': 365 };
     const days = dayMap[period] || 30;
-
     const labels = period === '12m' ? getLast12MonthsLabels() : getLabels(days);
     const count = labels.length;
 
@@ -330,17 +460,14 @@ function updateCharts(period) {
     trafficChart.update('none');
 }
 
-// --- Helpers ---
-function getLast30DaysLabels() {
-    return getLabels(30);
-}
+// --- Label & Data Helpers ---
+function getLast30DaysLabels() { return getLabels(30); }
 
 function getLabels(days) {
     const labels = [];
     const now = new Date();
     for (let i = days - 1; i >= 0; i--) {
-        const d = new Date(now);
-        d.setDate(d.getDate() - i);
+        const d = new Date(now); d.setDate(d.getDate() - i);
         labels.push(d.toLocaleDateString('cs-CZ', { day: 'numeric', month: 'short' }));
     }
     return labels;
@@ -350,8 +477,7 @@ function getLast12MonthsLabels() {
     const labels = [];
     const now = new Date();
     for (let i = 11; i >= 0; i--) {
-        const d = new Date(now);
-        d.setMonth(d.getMonth() - i);
+        const d = new Date(now); d.setMonth(d.getMonth() - i);
         labels.push(d.toLocaleDateString('cs-CZ', { month: 'short', year: '2-digit' }));
     }
     return labels;
@@ -363,7 +489,6 @@ function generateTrafficData(count, min, max) {
     for (let i = 0; i < count; i++) {
         const change = Math.floor(Math.random() * (max - min) * 0.4) - (max - min) * 0.2;
         prev = Math.max(min, Math.min(max, prev + change));
-        // Add weekend dip
         const dayOfWeek = new Date(Date.now() - (count - i) * 86400000).getDay();
         const weekendFactor = (dayOfWeek === 0 || dayOfWeek === 6) ? 0.6 : 1;
         data.push(Math.floor(prev * weekendFactor));

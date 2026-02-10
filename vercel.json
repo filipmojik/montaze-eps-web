@@ -1,0 +1,20 @@
+{
+    "buildCommand": "",
+    "outputDirectory": ".",
+    "functions": {
+        "api/*.js": {
+            "runtime": "@vercel/node@3"
+        }
+    },
+    "rewrites": [
+        { "source": "/api/:path*", "destination": "/api/:path*" }
+    ],
+    "headers": [
+        {
+            "source": "/admin/(.*)",
+            "headers": [
+                { "key": "X-Robots-Tag", "value": "noindex, nofollow" }
+            ]
+        }
+    ]
+}

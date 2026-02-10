@@ -137,7 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     animateCounters();
 
-    // --- Form handling ---
+    // --- Form handling with Supabase ---
     const form = document.getElementById('contactForm');
     if (form) {
         // Auto-select service from URL params
@@ -148,29 +148,85 @@ document.addEventListener('DOMContentLoaded', () => {
             if (serviceSelect) serviceSelect.value = serviceParam;
         }
 
-        form.addEventListener('submit', (e) => {
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
 
             const btn = form.querySelector('button[type="submit"]');
             const originalText = btn.innerHTML;
+
+            // Loading state
             btn.innerHTML = `
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                    <path d="M7 10l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" class="spin">
+                    <circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="2" stroke-dasharray="40" stroke-dashoffset="10" stroke-linecap="round"/>
                 </svg>
-                Poptávka odeslána!
+                Odesílám...
             `;
-            btn.style.background = '#22c55e';
             btn.disabled = true;
 
-            // In production, replace with actual form submission
-            console.log('Form data:', Object.fromEntries(new FormData(form)));
+            const formData = {
+                name: form.querySelector('#name').value,
+                email: form.querySelector('#email').value,
+                phone: form.querySelector('#phone').value,
+                service: form.querySelector('#service').value,
+                message: form.querySelector('#message').value,
+                page: window.location.pathname,
+                created_at: new Date().toISOString()
+            };
 
-            setTimeout(() => {
-                btn.innerHTML = originalText;
-                btn.style.background = '';
-                btn.disabled = false;
+            try {
+                // Try Supabase first
+                if (typeof window.supabaseClient !== 'undefined' && window.supabaseClient) {
+                    const { error } = await window.supabaseClient
+                        .from('inquiries')
+                        .insert([formData]);
+
+                    if (error) throw error;
+                } else {
+                    // Fallback: send to Vercel serverless function
+                    const res = await fetch('/api/inquiry', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(formData)
+                    });
+
+                    if (!res.ok) {
+                        const errData = await res.json().catch(() => ({}));
+                        throw new Error(errData.error || 'Chyba při odesílání');
+                    }
+                }
+
+                // Success
+                btn.innerHTML = `
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M7 10l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Poptávka odeslána!
+                `;
+                btn.style.background = '#22c55e';
                 form.reset();
-            }, 3000);
+
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.style.background = '';
+                    btn.disabled = false;
+                }, 3000);
+
+            } catch (err) {
+                console.error('Form error:', err);
+                btn.innerHTML = `
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M6 6l8 8M14 6l-8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    Chyba - zkuste to znovu
+                `;
+                btn.style.background = '#ef4444';
+
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.style.background = '';
+                    btn.disabled = false;
+                }, 3000);
+            }
         });
     }
 

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Přihlášení | Admin - Montáže EPS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --blue-50: #eff6ff; --blue-100: #dbeafe; --blue-500: #3b82f6;
+            --blue-600: #2563eb; --blue-700: #1d4ed8;
+            --gray-50: #f8fafc; --gray-100: #f1f5f9; --gray-200: #e2e8f0;
+            --gray-300: #cbd5e1; --gray-400: #94a3b8; --gray-500: #64748b;
+            --gray-700: #334155; --gray-800: #1e293b; --gray-900: #0f172a;
+            --gray-950: #020617; --white: #fff;
+            --font-family: 'Inter', sans-serif;
+        }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { height: 100%; }
+        body {
+            font-family: var(--font-family);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--gray-950), var(--gray-900));
+            padding: 24px;
+        }
+        .login-card {
+            width: 100%;
+            max-width: 420px;
+            background: var(--white);
+            border-radius: 20px;
+            padding: 48px 40px;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+        }
+        .login-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+            font-size: 1.25rem;
+            font-weight: 800;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+        .login-logo .lt { color: var(--gray-900); padding-right: 4px; }
+        .login-logo .lb {
+            background: var(--gray-900); color: var(--white);
+            padding: 3px 8px; border-radius: 6px;
+            font-size: 1.1rem; font-weight: 900; letter-spacing: 0.08em;
+        }
+        .login-subtitle {
+            text-align: center;
+            font-size: 0.813rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--gray-400);
+            margin-bottom: 36px;
+        }
+        .form-group { margin-bottom: 20px; }
+        .form-group label {
+            display: block; font-size: 0.875rem; font-weight: 600;
+            color: var(--gray-700); margin-bottom: 6px;
+        }
+        .form-group input {
+            width: 100%; padding: 12px 16px;
+            border: 1.5px solid var(--gray-200); border-radius: 12px;
+            font-family: var(--font-family); font-size: 0.938rem;
+            color: var(--gray-800); outline: none;
+            transition: all 0.2s ease;
+        }
+        .form-group input:focus {
+            border-color: var(--blue-500);
+            box-shadow: 0 0 0 3px rgba(59,130,246,0.1);
+        }
+        .form-group input::placeholder { color: var(--gray-400); }
+        .btn-login {
+            width: 100%; padding: 14px;
+            background: var(--blue-600); color: var(--white);
+            border: none; border-radius: 12px;
+            font-family: var(--font-family); font-size: 1rem; font-weight: 600;
+            cursor: pointer; transition: all 0.2s ease;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+        }
+        .btn-login:hover { background: var(--blue-700); transform: translateY(-1px); }
+        .btn-login:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
+        .error-msg {
+            display: none; padding: 12px 16px; border-radius: 10px;
+            background: #fef2f2; border: 1px solid #fecaca;
+            color: #dc2626; font-size: 0.813rem; margin-bottom: 20px;
+            text-align: center;
+        }
+        .error-msg.show { display: block; }
+        .login-footer {
+            text-align: center; margin-top: 24px;
+            font-size: 0.75rem; color: var(--gray-400);
+        }
+        .login-footer a { color: var(--blue-600); text-decoration: none; }
+        .login-footer a:hover { text-decoration: underline; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .spin { animation: spin 1s linear infinite; }
+    </style>
+</head>
+<body>
+    <div class="login-card">
+        <div class="login-logo">
+            <span class="lt">MONTAZE</span><span class="lb">EPS</span>
+        </div>
+        <p class="login-subtitle">Admin Panel</p>
+
+        <div class="error-msg" id="errorMsg"></div>
+
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="email">E-mail</label>
+                <input type="email" id="email" required placeholder="admin@montazeeps.cz" autocomplete="email">
+            </div>
+            <div class="form-group">
+                <label for="password">Heslo</label>
+                <input type="password" id="password" required placeholder="••••••••" autocomplete="current-password">
+            </div>
+            <button type="submit" class="btn-login" id="loginBtn">
+                Přihlásit se
+            </button>
+        </form>
+
+        <p class="login-footer">
+            <a href="../index.html">&larr; Zpět na web</a>
+        </p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // Supabase config - REPLACE with your values
+        const SUPABASE_URL = localStorage.getItem('sb_url') || 'YOUR_SUPABASE_URL';
+        const SUPABASE_ANON_KEY = localStorage.getItem('sb_key') || 'YOUR_SUPABASE_ANON_KEY';
+
+        let sb;
+        if (SUPABASE_URL !== 'YOUR_SUPABASE_URL') {
+            sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        }
+
+        // Check if already logged in
+        (async () => {
+            if (!sb) return;
+            const { data: { session } } = await sb.auth.getSession();
+            if (session) {
+                window.location.href = 'index.html';
+            }
+        })();
+
+        const form = document.getElementById('loginForm');
+        const errorMsg = document.getElementById('errorMsg');
+        const loginBtn = document.getElementById('loginBtn');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            errorMsg.classList.remove('show');
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            loginBtn.disabled = true;
+            loginBtn.innerHTML = '<svg width="20" height="20" viewBox="0 0 20 20" fill="none" class="spin"><circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="2" stroke-dasharray="40" stroke-dashoffset="10" stroke-linecap="round"/></svg> Přihlašuji...';
+
+            if (!sb) {
+                errorMsg.textContent = 'Supabase není nakonfigurován. Nastavte SUPABASE_URL a SUPABASE_ANON_KEY.';
+                errorMsg.classList.add('show');
+                loginBtn.disabled = false;
+                loginBtn.textContent = 'Přihlásit se';
+                return;
+            }
+
+            try {
+                const { data, error } = await sb.auth.signInWithPassword({ email, password });
+
+                if (error) {
+                    errorMsg.textContent = error.message === 'Invalid login credentials'
+                        ? 'Neplatný e-mail nebo heslo'
+                        : error.message;
+                    errorMsg.classList.add('show');
+                    loginBtn.disabled = false;
+                    loginBtn.textContent = 'Přihlásit se';
+                    return;
+                }
+
+                // Store session and redirect
+                window.location.href = 'index.html';
+
+            } catch (err) {
+                errorMsg.textContent = 'Chyba připojení. Zkuste to znovu.';
+                errorMsg.classList.add('show');
+                loginBtn.disabled = false;
+                loginBtn.textContent = 'Přihlásit se';
+            }
+        });
+    </script>
+</body>
+</html>
