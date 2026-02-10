@@ -27,6 +27,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     initPeriodSelector();
     initLogout();
 
+    // Load real analytics data from Vercel
+    await loadVercelAnalytics('30d');
+
     // Load real data if Supabase is connected
     if (sb && currentSession) {
         await loadRealInquiries();
@@ -79,6 +82,147 @@ function initLogout() {
         });
         logoutLink.parentElement.appendChild(logoutBtn);
     }
+}
+
+// --- Load Real Vercel Analytics ---
+async function loadVercelAnalytics(period) {
+    try {
+        const res = await fetch(`/api/analytics?period=${period}`);
+        if (!res.ok) {
+            console.warn('Analytics API not available, using demo data');
+            return;
+        }
+        const data = await res.json();
+        if (data.error) {
+            console.warn('Analytics:', data.error);
+            return;
+        }
+
+        // Update traffic chart with real timeseries data
+        if (data.timeseries && data.timeseries.data && trafficChart) {
+            const tsData = data.timeseries.data;
+            const labels = tsData.map(d => {
+                const date = new Date(d.key);
+                return date.toLocaleDateString('cs-CZ', { day: 'numeric', month: 'short' });
+            });
+            const visitors = tsData.map(d => d.uniques || d.visitors || 0);
+            const pageviews = tsData.map(d => d.pageViews || d.hits || 0);
+
+            trafficChart.data.labels = labels;
+            trafficChart.data.datasets[0].data = visitors;
+            trafficChart.data.datasets[1].data = pageviews;
+            trafficChart.update();
+
+            // Update KPIs with real totals
+            const totalVisitors = visitors.reduce((a, b) => a + b, 0);
+            const totalPageviews = pageviews.reduce((a, b) => a + b, 0);
+            document.getElementById('kpiVisitors').textContent = totalVisitors.toLocaleString('cs-CZ');
+            document.getElementById('kpiPageviews').textContent = totalPageviews.toLocaleString('cs-CZ');
+
+            // Calculate avg time (if available)
+            if (totalPageviews > 0) {
+                const avgPagesPerVisit = (totalPageviews / Math.max(totalVisitors, 1)).toFixed(1);
+                document.getElementById('kpiAvgTime').textContent = `${avgPagesPerVisit} str/návštěva`;
+            }
+        }
+
+        // Update top pages table with real data
+        if (data.pages && data.pages.data) {
+            const tableBody = document.querySelector('.data-table');
+            if (tableBody) {
+                const headerHtml = `<div class="table-header">
+                    <span>Stránka</span><span>Zobrazení</span><span>Návštěvníci</span><span>%</span>
+                </div>`;
+                const totalViews = data.pages.data.reduce((s, p) => s + (p.pageViews || p.hits || 0), 0);
+                const rowsHtml = data.pages.data.slice(0, 8).map(page => {
+                    const views = page.pageViews || page.hits || 0;
+                    const uniques = page.uniques || page.visitors || 0;
+                    const pct = totalViews > 0 ? ((views / totalViews) * 100).toFixed(1) : '0';
+                    const path = page.key || page.path || '/';
+                    const name = getPageName(path);
+                    return `<div class="table-row">
+                        <span class="page-name">${escapeHtml(path)} <em>${name}</em></span>
+                        <span>${views.toLocaleString('cs-CZ')}</span>
+                        <span>${uniques.toLocaleString('cs-CZ')}</span>
+                        <span>${pct} %</span>
+                    </div>`;
+                }).join('');
+                tableBody.innerHTML = headerHtml + rowsHtml;
+            }
+        }
+
+        // Update sources chart with real referrer data
+        if (data.referrers && data.referrers.data && sourcesChart) {
+            const refs = data.referrers.data.slice(0, 5);
+            if (refs.length > 0) {
+                const colors = ['#3b82f6', '#22c55e', '#a855f7', '#f59e0b', '#ef4444'];
+                sourcesChart.data.labels = refs.map(r => r.key || 'Přímý přístup');
+                sourcesChart.data.datasets[0].data = refs.map(r => r.pageViews || r.hits || 0);
+                sourcesChart.data.datasets[0].backgroundColor = colors.slice(0, refs.length);
+                sourcesChart.update();
+
+                // Update sources list
+                const sourcesList = document.querySelectorAll('.sources-list')[0];
+                if (sourcesList) {
+                    const total = refs.reduce((s, r) => s + (r.pageViews || r.hits || 0), 0);
+                    sourcesList.innerHTML = refs.map((r, i) => {
+                        const pct = total > 0 ? Math.round((r.pageViews || r.hits || 0) / total * 100) : 0;
+                        return `<div class="source-item">
+                            <span class="source-dot" style="background:${colors[i]}"></span>
+                            <span class="source-name">${escapeHtml(r.key || 'Přímý přístup')}</span>
+                            <span class="source-value">${pct} %</span>
+                        </div>`;
+                    }).join('');
+                }
+            }
+        }
+
+        // Update devices chart with real data
+        if (data.devices && data.devices.data && devicesChart) {
+            const devs = data.devices.data;
+            if (devs.length > 0) {
+                const colors = ['#3b82f6', '#22c55e', '#f59e0b', '#a855f7'];
+                devicesChart.data.labels = devs.map(d => d.key || 'Jiné');
+                devicesChart.data.datasets[0].data = devs.map(d => d.pageViews || d.hits || 0);
+                devicesChart.data.datasets[0].backgroundColor = colors.slice(0, devs.length);
+                devicesChart.update();
+
+                // Update devices list
+                const devicesList = document.querySelectorAll('.sources-list')[1];
+                if (devicesList) {
+                    const total = devs.reduce((s, d) => s + (d.pageViews || d.hits || 0), 0);
+                    devicesList.innerHTML = devs.map((d, i) => {
+                        const pct = total > 0 ? Math.round((d.pageViews || d.hits || 0) / total * 100) : 0;
+                        return `<div class="source-item">
+                            <span class="source-dot" style="background:${colors[i]}"></span>
+                            <span class="source-name">${escapeHtml(d.key || 'Jiné')}</span>
+                            <span class="source-value">${pct} %</span>
+                        </div>`;
+                    }).join('');
+                }
+            }
+        }
+
+        console.log('Real analytics loaded successfully');
+
+    } catch (err) {
+        console.warn('Could not load analytics, using demo data:', err.message);
+    }
+}
+
+function getPageName(path) {
+    const names = {
+        '/': 'Hlavní stránka',
+        '/sluzby/cctv': 'Kamerové systémy',
+        '/sluzby/eps': 'Požární systémy',
+        '/sluzby/pzts': 'Zabezpečení',
+        '/sluzby/loxone': 'Chytrá domácnost',
+        '/sluzby/wifi': 'Wi-Fi řešení',
+        '/sluzby/videozvonky': 'Videozvonky',
+        '/admin': 'Admin Dashboard',
+        '/admin/login': 'Admin Login',
+    };
+    return names[path] || path;
 }
 
 // --- Load Real Data from Supabase ---
