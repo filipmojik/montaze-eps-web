@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Montáže EPS - Profesionální montáže požárních systémů, kamerových systémů, zabezpečení a chytrých domácností. 15 let zkušeností. Bezplatná konzultace.">
+    <meta name="keywords" content="EPS, požární systémy, kamery, CCTV, zabezpečení, Loxone, chytrá domácnost, Frýdek-Místek">
+    <title>Montáže EPS | Profesionální zabezpečovací a požární systémy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="container nav-container">
+            <a href="#hero" class="logo">
+                <span class="logo-text">MONTAZE</span><span class="logo-badge">EPS</span>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#sluzby">Služby</a></li>
+                <li><a href="#proc-my">Proč my</a></li>
+                <li><a href="#reference">Reference</a></li>
+                <li><a href="#kontakt">Kontakt</a></li>
+                <li class="nav-close-btn"><button id="navClose" aria-label="Zavřít menu">&times;</button></li>
+            </ul>
+            <a href="#poptavka" class="btn btn-primary nav-cta">Nezávazná poptávka</a>
+            <button class="hamburger" id="hamburger" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section - Split Layout -->
+    <section class="hero" id="hero">
+        <div class="hero-bg">
+            <div class="hero-gradient"></div>
+            <div class="hero-grid"></div>
+        </div>
+        <div class="container hero-container">
+            <div class="hero-content">
+                <div class="hero-badge-tag">
+                    <span class="pulse-dot"></span>
+                    15 let zkušeností v oboru
+                </div>
+                <h1>Zabezpečíme váš majetek.<br><span class="text-gradient">Profesionálně a spolehlivě.</span></h1>
+                <p class="hero-subtitle">Komplexní řešení požárních systémů, kamerových systémů, zabezpečení a chytrých domácností pro firmy i domácnosti po celé ČR.</p>
+                <div class="hero-actions">
+                    <a href="#poptavka" class="btn btn-primary btn-lg">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 10h14M12 5l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        Nezávazná poptávka zdarma
+                    </a>
+                    <a href="tel:+420775219510" class="btn btn-outline btn-lg">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" stroke="currentColor" stroke-width="1.5"/></svg>
+                        +420 775 219 510
+                    </a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-number" data-target="15">0</span>
+                        <span class="stat-suffix">+</span>
+                        <span class="stat-label">Let zkušeností</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat">
+                        <span class="stat-number" data-target="150">0</span>
+                        <span class="stat-suffix">+</span>
+                        <span class="stat-label">Realizací</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat">
+                        <span class="stat-number" data-target="100">0</span>
+                        <span class="stat-suffix">%</span>
+                        <span class="stat-label">Pokrytí ČR</span>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="hero-image-wrapper">
+                    <img src="img/cctv.png" alt="Profesionální kamerové systémy CCTV - Hikvision a Dahua" loading="eager">
+                    <div class="hero-image-glow"></div>
+                </div>
+                <div class="hero-floating-card card-top">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2L12.09 7.26L18 8.27L14 12.14L14.18 18.02L10 15.77L5.82 18.02L6 12.14L2 8.27L7.91 7.26L10 2Z" fill="#FBBF24"/></svg>
+                    <span>Certifikovaný partner</span>
+                </div>
+                <div class="hero-floating-card card-bottom">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2l-8 5v6c0 5.55 3.84 10.74 8 12 4.16-1.26 8-6.45 8-12V7l-8-5z" fill="#22C55E"/><path d="M7 10l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span>24/7 servisní podpora</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Bar - Animated Logos -->
+    <section class="trust-bar">
+        <div class="container">
+            <p class="trust-label">Pracujeme s prověřenými značkami</p>
+        </div>
+        <div class="trust-scroll-wrapper">
+            <div class="trust-scroll" id="trustScroll">
+                <div class="trust-logos-track">
+                    <!-- Set 1 -->
+                    <div class="trust-logo-item"><svg width="120" height="36" viewBox="0 0 120 36"><text x="60" y="24" text-anchor="middle" font-family="Inter,sans-serif" font-weight="800" font-size="16" fill="#1e293b" letter-spacing="0.5">ESSER</text></svg></div>
+                    <div class="trust-logo-item"><svg width="140" height="36" viewBox="0 0 140 36"><text x="70" y="24" text-anchor="middle" font-family="Inter,sans-serif" font-weight="700" font-size="15" fill="#E4002B" letter-spacing="0.3">HIKVISION</text></svg></div>
+                    <div class="trust-logo-item"><svg width="110" height="36" viewBox="0 0 110 36"><text x="55" y="24" text-anchor="middle" font-family="Inter,sans-serif" font-weight="700" font-size="15" fill="#1e293b" letter-spacing="0.3">DAHUA</text></svg></div>
+                    <div class="trust-logo-item"><svg width="120" height="36" viewBox="0 0 120 36"><rect x="10" y="6" width="100" height="24" rx="4" fill="#69BE28"/><text x="60" y="24" text-anchor="middle" font-family="Inter,sans-serif" font-weight="800" font-size="15" fill="#fff" letter-spacing="0.5">LOXONE</text></svg></div>
+                    <div class="trust-logo-item"><svg width="140" height="36" viewBox="0 0 140 36"><text x="70" y="24" text-anchor="middle" font-family="Inter,sans-serif" font-weight="700" font-size="14" fill="#E3001B" letter-spacing="0.3">JABLOTRON</text></svg></div>
+                    <div class="trust-logo-item"><svg width="120" height="36" viewBox="0 0 120 36"><text x="60" y="24" text-anchor="middle" font-family="Inter,sans-serif" font-weight="700" font-size="15" fill="#4ACBD6" letter-spacing="0.3">TP-LINK</text></svg></div>
+                    <div class="trust-logo-item"><svg width="100" height="36" viewBox="0 0 100 36"><text x="50" y="24" text-anchor="middle" font-family="Inter,sans-serif" font-weight="700" font-size="15" fill="#1e293b" letter-spacing="0.5">GALAXY</text></svg></div>
+                    <div class="trust-logo-item"><svg width="60" height="36" viewBox="0 0 60 36"><rect x="8" y="6" width="44" height="24" rx="4" fill="#1e293b"/><text x="30" y="24" text-anchor="middle" font-family="Inter,sans-serif" font-weight="900" font-size="16" fill="#fff">2N</text></svg></div>
+                    <!-- Set 2 (duplicate for seamless loop) -->
+                    <div class="trust-logo-item"><svg width="120" height="36" viewBox="0 0 120 36"><text x="60" y="24" text-anchor="middle" font-family="Inter,sans-serif" font-weight="800" font-size="16" fill="#1e293b" letter-spacing="0.5">ESSER</text></svg></div>
+                    <div class="trust-logo-item"><svg width="140" height="36" viewBox="0 0 140 36"><text x="70" y="24" text-anchor="middle" font-family="Inter,sans-serif" font-weight="700" font-size="15" fill="#E4002B" letter-spacing="0.3">HIKVISION</text></svg></div>
+                    <div class="trust-logo-item"><svg width="110" height="36" viewBox="0 0 110 36"><text x="55" y="24" text-anchor="middle" font-family="Inter,sans-serif" font-weight="700" font-size="15" fill="#1e293b" letter-spacing="0.3">DAHUA</text></svg></div>
+                    <div class="trust-logo-item"><svg width="120" height="36" viewBox="0 0 120 36"><rect x="10" y="6" width="100" height="24" rx="4" fill="#69BE28"/><text x="60" y="24" text-anchor="middle" font-family="Inter,sans-serif" font-weight="800" font-size="15" fill="#fff" letter-spacing="0.5">LOXONE</text></svg></div>
+                    <div class="trust-logo-item"><svg width="140" height="36" viewBox="0 0 140 36"><text x="70" y="24" text-anchor="middle" font-family="Inter,sans-serif" font-weight="700" font-size="14" fill="#E3001B" letter-spacing="0.3">JABLOTRON</text></svg></div>
+                    <div class="trust-logo-item"><svg width="120" height="36" viewBox="0 0 120 36"><text x="60" y="24" text-anchor="middle" font-family="Inter,sans-serif" font-weight="700" font-size="15" fill="#4ACBD6" letter-spacing="0.3">TP-LINK</text></svg></div>
+                    <div class="trust-logo-item"><svg width="100" height="36" viewBox="0 0 100 36"><text x="50" y="24" text-anchor="middle" font-family="Inter,sans-serif" font-weight="700" font-size="15" fill="#1e293b" letter-spacing="0.5">GALAXY</text></svg></div>
+                    <div class="trust-logo-item"><svg width="60" height="36" viewBox="0 0 60 36"><rect x="8" y="6" width="44" height="24" rx="4" fill="#1e293b"/><text x="30" y="24" text-anchor="middle" font-family="Inter,sans-serif" font-weight="900" font-size="16" fill="#fff">2N</text></svg></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="sluzby">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Naše služby</span>
+                <h2>Kompletní řešení zabezpečení<br>pod jednou střechou</h2>
+                <p>Od návrhu přes instalaci až po servis. Vše zajistíme profesionálně a na klíč.</p>
+            </div>
+            <div class="services-grid">
+                <!-- EPS -->
+                <a href="sluzby/eps.html" class="service-card">
+                    <div class="service-img-wrap">
+                        <img src="img/eps.png" alt="EPS požární signalizace" loading="lazy">
+                    </div>
+                    <div class="service-body">
+                        <h3>Požární systémy (EPS)</h3>
+                        <p>Montáž, servis a funkční zkoušky elektronické požární signalizace. Specializace na systémy Esser, Lites, Schrack a Zettler.</p>
+                        <ul class="service-features">
+                            <li>Projektování a montáž</li>
+                            <li>Pravidelné revize a servis</li>
+                            <li>Nonstop servisní podpora</li>
+                        </ul>
+                        <span class="service-link">Více o požárních systémech <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                    </div>
+                </a>
+                <!-- CCTV -->
+                <a href="sluzby/cctv.html" class="service-card featured">
+                    <div class="service-badge">Nejžádanější</div>
+                    <div class="service-img-wrap">
+                        <img src="img/cctv.png" alt="CCTV kamerové systémy" loading="lazy">
+                    </div>
+                    <div class="service-body">
+                        <h3>Kamerové systémy (CCTV)</h3>
+                        <p>Profesionální kamerové systémy s 24/7 monitoringem. Špičkové technologie Hikvision a Dahua pro maximální bezpečnost.</p>
+                        <ul class="service-features">
+                            <li>HD a 4K rozlišení</li>
+                            <li>Noční vidění a AI detekce</li>
+                            <li>Vzdálený přístup přes mobil</li>
+                        </ul>
+                        <span class="service-link">Více o kamerových systémech <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                    </div>
+                </a>
+                <!-- PZTS -->
+                <a href="sluzby/pzts.html" class="service-card">
+                    <div class="service-img-wrap">
+                        <img src="img/pzts.png" alt="PZTS zabezpečovací systémy" loading="lazy">
+                    </div>
+                    <div class="service-body">
+                        <h3>Zabezpečovací systémy (PZTS)</h3>
+                        <p>Elektronické zabezpečení objektů se systémy Galaxy, Jablotron, Paradox, Satel a dalšími prověřenými značkami.</p>
+                        <ul class="service-features">
+                            <li>Návrh zabezpečení na míru</li>
+                            <li>Napojení na PCO</li>
+                            <li>Mobilní ovládání a notifikace</li>
+                        </ul>
+                        <span class="service-link">Více o zabezpečení <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                    </div>
+                </a>
+                <!-- Loxone -->
+                <a href="sluzby/loxone.html" class="service-card">
+                    <div class="service-img-wrap">
+                        <img src="img/loxone-smart.png" alt="Loxone chytrá domácnost" loading="lazy">
+                    </div>
+                    <div class="service-body">
+                        <h3>Chytrá domácnost Loxone</h3>
+                        <p>Automatizace osvětlení, stínění, klimatizace, topení a multimédií. Jeden systém pro kompletní kontrolu vašeho domu.</p>
+                        <ul class="service-features">
+                            <li>Úspora energií až 30 %</li>
+                            <li>Ovládání přes aplikaci</li>
+                            <li>Integrace všech systémů</li>
+                        </ul>
+                        <span class="service-link">Více o chytré domácnosti <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                    </div>
+                </a>
+                <!-- WiFi -->
+                <a href="sluzby/wifi.html" class="service-card">
+                    <div class="service-img-wrap">
+                        <img src="img/wifi.png" alt="Profesionální Wi-Fi TP-Link Omada" loading="lazy">
+                    </div>
+                    <div class="service-body">
+                        <h3>Profesionální Wi-Fi</h3>
+                        <p>Stabilní a rychlé připojení pro firmy i domácnosti. Systémy TP-Link Omada s centrální správou a bezproblémovým roamingem.</p>
+                        <ul class="service-features">
+                            <li>Pokrytí celého objektu</li>
+                            <li>Centrální správa sítě</li>
+                            <li>VLAN a bezpečnostní politiky</li>
+                        </ul>
+                        <span class="service-link">Více o Wi-Fi řešeních <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                    </div>
+                </a>
+                <!-- Videozvonky -->
+                <a href="sluzby/videozvonky.html" class="service-card">
+                    <div class="service-img-wrap">
+                        <img src="img/videozvonky.png" alt="Videozvonky a interkom" loading="lazy">
+                    </div>
+                    <div class="service-body">
+                        <h3>Videozvonky a interkom</h3>
+                        <p>Chytré videozvonky Hikvision, Dahua a 2N s nepřetržitým záznamem. Vždy víte, kdo stojí u vašich dveří.</p>
+                        <ul class="service-features">
+                            <li>24/7 záznam a monitoring</li>
+                            <li>Komunikace přes mobil</li>
+                            <li>Integrace se zámky</li>
+                        </ul>
+                        <span class="service-link">Více o videozvoncích <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Us Section -->
+    <section class="why-us" id="proc-my">
+        <div class="container">
+            <div class="why-us-grid">
+                <div class="why-us-content">
+                    <span class="section-tag">Proč zvolit nás</span>
+                    <h2>Více než 15 let praxe v&nbsp;oboru slaboproudu</h2>
+                    <p class="why-us-text">Jan Pavlásek začínal s počítačovými sítěmi a internetovými přípojkami. Postupně se specializoval na bezpečnostní a kamerové systémy, působil jako obchodní a technický zástupce Hikvision a realizoval projekty po celé České republice &mdash; včetně stadionu FC Viktoria Plzeň.</p>
+                    <div class="why-us-features">
+                        <div class="feature">
+                            <div class="feature-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </div>
+                            <div>
+                                <strong>Konzultace a nacenění zdarma</strong>
+                                <p>Přijedeme, prohlédneme objekt a navrhneme optimální řešení. Bez závazků.</p>
+                            </div>
+                        </div>
+                        <div class="feature">
+                            <div class="feature-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </div>
+                            <div>
+                                <strong>Rychlá realizace</strong>
+                                <p>Dodržujeme termíny. Od objednávky po spuštění systému v nejkratším možném čase.</p>
+                            </div>
+                        </div>
+                        <div class="feature">
+                            <div class="feature-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" stroke="currentColor" stroke-width="2"/></svg>
+                            </div>
+                            <div>
+                                <strong>Záruka a záruční servis</strong>
+                                <p>Na každou instalaci poskytujeme záruku a zajišťujeme pravidelný servis.</p>
+                            </div>
+                        </div>
+                        <div class="feature">
+                            <div class="feature-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </div>
+                            <div>
+                                <strong>Působnost po celé ČR</strong>
+                                <p>Realizujeme zakázky po celé České republice. Vzdálenost pro nás není překážka.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="why-us-visual">
+                    <div class="visual-card">
+                        <div class="visual-stat">
+                            <div class="visual-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 6v6l4 2" stroke="#3B82F6" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="12" r="9" stroke="#3B82F6" stroke-width="2"/></svg>
+                            </div>
+                            <div>
+                                <span class="visual-stat-number">24/7</span>
+                                <span class="visual-stat-label">Servisní podpora</span>
+                            </div>
+                        </div>
+                        <div class="visual-stat">
+                            <div class="visual-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 2l-8 5v6c0 5.55 3.84 10.74 8 12 4.16-1.26 8-6.45 8-12V7l-8-5z" stroke="#3B82F6" stroke-width="2"/><path d="M9 12l2 2 4-4" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </div>
+                            <div>
+                                <span class="visual-stat-number">100 %</span>
+                                <span class="visual-stat-label">Spokojenost klientů</span>
+                            </div>
+                        </div>
+                        <div class="visual-stat">
+                            <div class="visual-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4 20l4-8 4 4 4-12 4 8" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </div>
+                            <div>
+                                <span class="visual-stat-number">150+</span>
+                                <span class="visual-stat-label">Dokončených projektů</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="process">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Jak to funguje</span>
+                <h2>Od prvního kontaktu ke spuštění<br>ve 4 jednoduchých krocích</h2>
+            </div>
+            <div class="process-steps">
+                <div class="process-step">
+                    <div class="step-number">01</div>
+                    <h3>Nezávazná poptávka</h3>
+                    <p>Vyplňte jednoduchý formulář nebo zavolejte. Řeknete nám, co potřebujete.</p>
+                </div>
+                <div class="process-connector"><span></span></div>
+                <div class="process-step">
+                    <div class="step-number">02</div>
+                    <h3>Konzultace zdarma</h3>
+                    <p>Přijedeme k vám, prohlédneme objekt a navrhneme optimální řešení.</p>
+                </div>
+                <div class="process-connector"><span></span></div>
+                <div class="process-step">
+                    <div class="step-number">03</div>
+                    <h3>Nacenění a realizace</h3>
+                    <p>Připravíme cenovou nabídku na míru. Po odsouhlasení ihned začneme.</p>
+                </div>
+                <div class="process-connector"><span></span></div>
+                <div class="process-step">
+                    <div class="step-number">04</div>
+                    <h3>Předání a servis</h3>
+                    <p>Systém otestujeme, předáme a zajistíme pravidelný servis.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section" id="poptavka">
+        <div class="container">
+            <div class="cta-grid">
+                <div class="cta-content">
+                    <span class="section-tag section-tag-light">Nezávazná poptávka</span>
+                    <h2>Získejte cenovou nabídku<br>do 24 hodin</h2>
+                    <p>Vyplňte formulář a my se vám ozveme s nabídkou na míru. Konzultace i nacenění je zcela zdarma a bez jakýchkoliv závazků.</p>
+                    <div class="cta-benefits">
+                        <div class="cta-benefit">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M7 10l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.5"/></svg>
+                            Konzultace zdarma
+                        </div>
+                        <div class="cta-benefit">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M7 10l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.5"/></svg>
+                            Nacenění zdarma
+                        </div>
+                        <div class="cta-benefit">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M7 10l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.5"/></svg>
+                            Odpověď do 24 hodin
+                        </div>
+                        <div class="cta-benefit">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M7 10l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.5"/></svg>
+                            Bez jakýchkoliv závazků
+                        </div>
+                    </div>
+                </div>
+                <div class="cta-form-wrapper">
+                    <form class="cta-form" id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Jméno a příjmení *</label>
+                            <input type="text" id="name" name="name" required placeholder="Jan Novák">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="email">E-mail *</label>
+                                <input type="email" id="email" name="email" required placeholder="jan@email.cz">
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Telefon *</label>
+                                <input type="tel" id="phone" name="phone" required placeholder="+420 xxx xxx xxx">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="service">O jakou službu máte zájem?</label>
+                            <select id="service" name="service">
+                                <option value="">Vyberte službu...</option>
+                                <option value="eps">Požární systémy (EPS)</option>
+                                <option value="cctv">Kamerové systémy (CCTV)</option>
+                                <option value="pzts">Zabezpečovací systémy (PZTS)</option>
+                                <option value="loxone">Chytrá domácnost Loxone</option>
+                                <option value="wifi">Profesionální Wi-Fi</option>
+                                <option value="videozvonky">Videozvonky</option>
+                                <option value="jine">Jiné / Kombinace</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Popište váš požadavek</label>
+                            <textarea id="message" name="message" rows="4" placeholder="Napište nám, co potřebujete zabezpečit, jaký máte objekt, případně další detaily..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-lg btn-full">
+                            Odeslat nezávaznou poptávku
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 10h14M12 5l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </button>
+                        <p class="form-note">Odesláním souhlasíte se zpracováním osobních údajů za účelem vyřízení poptávky.</p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- References -->
+    <section class="references" id="reference">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Reference</span>
+                <h2>Důvěřují nám firmy i&nbsp;domácnosti</h2>
+            </div>
+            <div class="references-grid">
+                <div class="reference-card">
+                    <div class="reference-stars">
+                        <svg width="18" height="18" viewBox="0 0 20 20" fill="#FBBF24"><path d="M10 1l2.39 4.84L18 6.71l-4 3.9.94 5.49L10 13.47 5.06 16.1 6 10.61l-4-3.9 5.61-.87L10 1z"/></svg>
+                        <svg width="18" height="18" viewBox="0 0 20 20" fill="#FBBF24"><path d="M10 1l2.39 4.84L18 6.71l-4 3.9.94 5.49L10 13.47 5.06 16.1 6 10.61l-4-3.9 5.61-.87L10 1z"/></svg>
+                        <svg width="18" height="18" viewBox="0 0 20 20" fill="#FBBF24"><path d="M10 1l2.39 4.84L18 6.71l-4 3.9.94 5.49L10 13.47 5.06 16.1 6 10.61l-4-3.9 5.61-.87L10 1z"/></svg>
+                        <svg width="18" height="18" viewBox="0 0 20 20" fill="#FBBF24"><path d="M10 1l2.39 4.84L18 6.71l-4 3.9.94 5.49L10 13.47 5.06 16.1 6 10.61l-4-3.9 5.61-.87L10 1z"/></svg>
+                        <svg width="18" height="18" viewBox="0 0 20 20" fill="#FBBF24"><path d="M10 1l2.39 4.84L18 6.71l-4 3.9.94 5.49L10 13.47 5.06 16.1 6 10.61l-4-3.9 5.61-.87L10 1z"/></svg>
+                    </div>
+                    <p class="reference-text">"Profesionální přístup od prvního kontaktu. Kamerový systém funguje bezchybně a instalace proběhla rychle a čistě."</p>
+                    <div class="reference-author">
+                        <div class="reference-avatar">MK</div>
+                        <div><strong>Martin K.</strong><span>Rodinný dům, Ostrava</span></div>
+                    </div>
+                </div>
+                <div class="reference-card">
+                    <div class="reference-stars">
+                        <svg width="18" height="18" viewBox="0 0 20 20" fill="#FBBF24"><path d="M10 1l2.39 4.84L18 6.71l-4 3.9.94 5.49L10 13.47 5.06 16.1 6 10.61l-4-3.9 5.61-.87L10 1z"/></svg>
+                        <svg width="18" height="18" viewBox="0 0 20 20" fill="#FBBF24"><path d="M10 1l2.39 4.84L18 6.71l-4 3.9.94 5.49L10 13.47 5.06 16.1 6 10.61l-4-3.9 5.61-.87L10 1z"/></svg>
+                        <svg width="18" height="18" viewBox="0 0 20 20" fill="#FBBF24"><path d="M10 1l2.39 4.84L18 6.71l-4 3.9.94 5.49L10 13.47 5.06 16.1 6 10.61l-4-3.9 5.61-.87L10 1z"/></svg>
+                        <svg width="18" height="18" viewBox="0 0 20 20" fill="#FBBF24"><path d="M10 1l2.39 4.84L18 6.71l-4 3.9.94 5.49L10 13.47 5.06 16.1 6 10.61l-4-3.9 5.61-.87L10 1z"/></svg>
+                        <svg width="18" height="18" viewBox="0 0 20 20" fill="#FBBF24"><path d="M10 1l2.39 4.84L18 6.71l-4 3.9.94 5.49L10 13.47 5.06 16.1 6 10.61l-4-3.9 5.61-.87L10 1z"/></svg>
+                    </div>
+                    <p class="reference-text">"Řešili jsme kompletní zabezpečení firmy včetně EPS a kamer. Vše funguje na jedničku, servis je rychlý a spolehlivý."</p>
+                    <div class="reference-author">
+                        <div class="reference-avatar">PV</div>
+                        <div><strong>Petr V.</strong><span>Výrobní hala, Frýdek-Místek</span></div>
+                    </div>
+                </div>
+                <div class="reference-card">
+                    <div class="reference-stars">
+                        <svg width="18" height="18" viewBox="0 0 20 20" fill="#FBBF24"><path d="M10 1l2.39 4.84L18 6.71l-4 3.9.94 5.49L10 13.47 5.06 16.1 6 10.61l-4-3.9 5.61-.87L10 1z"/></svg>
+                        <svg width="18" height="18" viewBox="0 0 20 20" fill="#FBBF24"><path d="M10 1l2.39 4.84L18 6.71l-4 3.9.94 5.49L10 13.47 5.06 16.1 6 10.61l-4-3.9 5.61-.87L10 1z"/></svg>
+                        <svg width="18" height="18" viewBox="0 0 20 20" fill="#FBBF24"><path d="M10 1l2.39 4.84L18 6.71l-4 3.9.94 5.49L10 13.47 5.06 16.1 6 10.61l-4-3.9 5.61-.87L10 1z"/></svg>
+                        <svg width="18" height="18" viewBox="0 0 20 20" fill="#FBBF24"><path d="M10 1l2.39 4.84L18 6.71l-4 3.9.94 5.49L10 13.47 5.06 16.1 6 10.61l-4-3.9 5.61-.87L10 1z"/></svg>
+                        <svg width="18" height="18" viewBox="0 0 20 20" fill="#FBBF24"><path d="M10 1l2.39 4.84L18 6.71l-4 3.9.94 5.49L10 13.47 5.06 16.1 6 10.61l-4-3.9 5.61-.87L10 1z"/></svg>
+                    </div>
+                    <p class="reference-text">"Loxone nám kompletně zautomatizoval dům. Ovládáme vše z jedné aplikace. Skvělá spolupráce a vstřícný přístup."</p>
+                    <div class="reference-author">
+                        <div class="reference-avatar">LN</div>
+                        <div><strong>Lucie N.</strong><span>Novostavba, Brno</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="kontakt">
+        <div class="container">
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <span class="section-tag">Kontakt</span>
+                    <h2>Pojďme to probrat</h2>
+                    <p>Máte dotaz nebo chcete nezávaznou konzultaci? Neváhejte se na nás obrátit.</p>
+                    <div class="contact-details">
+                        <a href="tel:+420775219510" class="contact-item">
+                            <div class="contact-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C7.82 21 3 16.18 3 10V5z" stroke="currentColor" stroke-width="1.5"/></svg></div>
+                            <div><strong>Telefon</strong><span>+420 775 219 510</span></div>
+                        </a>
+                        <a href="mailto:info@montazeeps.cz" class="contact-item">
+                            <div class="contact-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke="currentColor" stroke-width="1.5"/></svg></div>
+                            <div><strong>E-mail</strong><span>info@montazeeps.cz</span></div>
+                        </a>
+                        <div class="contact-item">
+                            <div class="contact-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" stroke="currentColor" stroke-width="1.5"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" stroke="currentColor" stroke-width="1.5"/></svg></div>
+                            <div><strong>Sídlo</strong><span>Frýdek-Místek, Česká republika</span></div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" stroke="currentColor" stroke-width="1.5"/></svg></div>
+                            <div><strong>IČO</strong><span>74552694</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-map">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d41244.80196428392!2d18.3!3d49.68!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4713fc8d0fbb6067%3A0x400af0f66154090!2sFr%C3%BDdek-M%C3%ADstek!5e0!3m2!1scs!2scz!4v1700000000000!5m2!1scs!2scz" width="100%" height="100%" style="border:0; border-radius: 16px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Floating CTA -->
+    <div class="floating-cta" id="floatingCta">
+        <a href="#poptavka" class="btn btn-primary">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 10h14M12 5l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Nezávazná poptávka
+        </a>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="#hero" class="logo">
+                        <span class="logo-text">MONTAZE</span><span class="logo-badge">EPS</span>
+                    </a>
+                    <p>Profesionální montáže zabezpečovacích a požárních systémů s více než 15 lety zkušeností.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Služby</h4>
+                    <ul>
+                        <li><a href="sluzby/eps.html">Požární systémy</a></li>
+                        <li><a href="sluzby/cctv.html">Kamerové systémy</a></li>
+                        <li><a href="sluzby/pzts.html">Zabezpečení</a></li>
+                        <li><a href="sluzby/loxone.html">Chytrá domácnost</a></li>
+                        <li><a href="sluzby/wifi.html">Profesionální Wi-Fi</a></li>
+                        <li><a href="sluzby/videozvonky.html">Videozvonky</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Společnost</h4>
+                    <ul>
+                        <li><a href="#proc-my">O nás</a></li>
+                        <li><a href="#reference">Reference</a></li>
+                        <li><a href="#kontakt">Kontakt</a></li>
+                        <li><a href="#poptavka">Poptávka</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Kontakt</h4>
+                    <ul>
+                        <li><a href="tel:+420775219510">+420 775 219 510</a></li>
+                        <li><a href="mailto:info@montazeeps.cz">info@montazeeps.cz</a></li>
+                        <li>Frýdek-Místek</li>
+                        <li>IČO: 74552694</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Montáže EPS &mdash; Jan Pavlásek. Všechna práva vyhrazena.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
