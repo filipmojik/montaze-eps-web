@@ -2011,3 +2011,178 @@ h3 {
         transform: none;
     }
 }
+
+/* ===================================
+   EXTRA MOBILE OPTIMIZATIONS
+   =================================== */
+
+/* Fix tap targets - minimum 44px */
+@media (max-width: 768px) {
+    .btn,
+    .btn-primary,
+    .btn-outline,
+    a.service-link,
+    .nav-links.active li a {
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+    }
+
+    /* Logo mobile - smaller for navbar */
+    .logo-text {
+        font-size: 0.9rem;
+        letter-spacing: 0.06em;
+    }
+
+    .logo-subtitle {
+        font-size: 0.55rem;
+        padding: 1px 6px;
+        letter-spacing: 0.08em;
+    }
+
+    /* Trust bar - better mobile sizing */
+    .trust-bar {
+        padding: 20px 0;
+    }
+
+    .trust-logo-item svg {
+        max-height: 22px;
+    }
+
+    .trust-bar .section-tag {
+        font-size: 0.688rem;
+        margin-bottom: 12px;
+    }
+
+    /* Section spacing - tighter on mobile */
+    .section-header h2 {
+        font-size: 1.5rem;
+    }
+
+    .section-header p {
+        font-size: 0.875rem;
+    }
+
+    /* Service cards - full width, better spacing */
+    .service-card {
+        margin-bottom: 8px;
+    }
+
+    .service-content {
+        padding: 16px;
+    }
+
+    /* Contact items - stack properly */
+    .contact-item {
+        padding: 12px;
+    }
+
+    .contact-icon {
+        width: 40px;
+        height: 40px;
+    }
+
+    /* Footer mobile */
+    .footer {
+        padding: 40px 0 24px;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+    }
+}
+
+/* Small phones (iPhone SE, etc.) */
+@media (max-width: 380px) {
+    .container {
+        padding: 0 12px;
+    }
+
+    .hero h1 {
+        font-size: 1.25rem;
+    }
+
+    .hero-subtitle {
+        font-size: 0.75rem;
+    }
+
+    .hero-image-wrapper {
+        max-width: 180px;
+    }
+
+    .stat-number,
+    .stat-suffix {
+        font-size: 1.125rem;
+    }
+
+    .kpi-card,
+    .cta-form {
+        padding: 16px;
+    }
+
+    .process-step p {
+        font-size: 0.813rem;
+    }
+
+    /* Service subpages */
+    .service-hero h1 {
+        font-size: 1.375rem;
+    }
+
+    .service-hero-text {
+        font-size: 0.875rem;
+    }
+
+    .brand-tag {
+        font-size: 0.688rem;
+        padding: 4px 10px;
+    }
+}
+
+/* iOS safe area support */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+    .footer {
+        padding-bottom: calc(24px + env(safe-area-inset-bottom));
+    }
+
+    .floating-cta {
+        bottom: calc(24px + env(safe-area-inset-bottom));
+    }
+
+    .nav-links.active {
+        padding-bottom: calc(60px + env(safe-area-inset-bottom));
+    }
+}
+
+/* Prevent horizontal scroll on mobile */
+html, body {
+    overflow-x: hidden;
+}
+
+/* Smooth scrolling for anchor links */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Better font rendering on mobile */
+@media (max-width: 768px) {
+    body {
+        -webkit-text-size-adjust: 100%;
+        text-size-adjust: 100%;
+    }
+
+    /* Fix input zoom on iOS (font-size < 16px causes zoom) */
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        font-size: 16px;
+    }
+
+    /* WiFi detail GIF - responsive */
+    .service-hero-image img[src*="gif"] {
+        max-height: 300px;
+        object-fit: contain;
+    }
+}
