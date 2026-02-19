@@ -727,16 +727,7 @@
                 </div>
                 <div class="contact-map">
                     <div class="map-container">
-                        <img src="img/mapa-msk.png" alt="Mapa Moravskoslezského kraje" class="region-map-img">
-                        <div class="map-overlay-badge">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                                <path
-                                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                                    stroke="currentColor" stroke-width="1.5" />
-                                <path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" stroke="currentColor" stroke-width="1.5" />
-                            </svg>
-                            Moravskoslezský kraj
-                        </div>
+                        <iframe src="https://frame.mapy.cz/zakladni?x=18.2&y=49.75&z=9&l=0" allowfullscreen loading="lazy" title="Mapa Moravskoslezského kraje"></iframe>
                     </div>
                 </div>
             </div>
@@ -802,9 +793,25 @@
             </div>
             <div class="footer-bottom">
                 <p>&copy; 2025 Montáže a servis &mdash; Jan Pavlásek. Všechna práva vyhrazena.</p>
+                <div class="footer-legal">
+                    <a href="ochrana-udaju.html">Ochrana osobních údajů</a>
+                    <a href="zasady-cookies.html">Zásady cookies</a>
+                    <button class="cookie-settings-btn" onclick="resetCookieConsent()">Nastavení cookies</button>
+                </div>
             </div>
         </div>
     </footer>
+
+    <!-- Cookies Banner -->
+    <div class="cookie-banner" id="cookieBanner">
+        <div class="cookie-banner-inner">
+            <p class="cookie-banner-text">Tento web používá cookies pro zajištění funkčnosti a anonymní analytiku návštěvnosti. Více informací najdete v <a href="zasady-cookies.html">zásadách cookies</a> a <a href="ochrana-udaju.html">ochraně osobních údajů</a>.</p>
+            <div class="cookie-banner-actions">
+                <button class="cookie-btn cookie-btn-reject" onclick="setCookieConsent('rejected')">Pouze nezbytné</button>
+                <button class="cookie-btn cookie-btn-accept" onclick="setCookieConsent('accepted')">Přijmout vše</button>
+            </div>
+        </div>
+    </div>
 
     <script src="js/main.js"></script>
     <!-- Vercel Web Analytics -->

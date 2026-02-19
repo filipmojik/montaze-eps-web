@@ -258,4 +258,35 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // --- Cookies Banner ---
+    const cookieBanner = document.getElementById('cookieBanner');
+    if (cookieBanner) {
+        const consent = localStorage.getItem('cookieConsent');
+        if (!consent) {
+            setTimeout(() => {
+                cookieBanner.classList.add('visible');
+            }, 1000);
+        }
+    }
+
 });
+
+// --- Cookie consent functions (global) ---
+function setCookieConsent(value) {
+    localStorage.setItem('cookieConsent', value);
+    localStorage.setItem('cookieConsentDate', new Date().toISOString());
+    const banner = document.getElementById('cookieBanner');
+    if (banner) {
+        banner.classList.remove('visible');
+    }
+}
+
+function resetCookieConsent() {
+    localStorage.removeItem('cookieConsent');
+    localStorage.removeItem('cookieConsentDate');
+    const banner = document.getElementById('cookieBanner');
+    if (banner) {
+        banner.classList.add('visible');
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }
+}

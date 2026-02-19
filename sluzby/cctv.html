@@ -225,10 +225,26 @@
             </div>
             <div class="footer-bottom">
                 <p>&copy; 2025 Montáže a servis &mdash; Jan Pavlásek. Všechna práva vyhrazena.</p>
+                <div class="footer-legal">
+                    <a href="../ochrana-udaju.html">Ochrana osobních údajů</a>
+                    <a href="../zasady-cookies.html">Zásady cookies</a>
+                    <button class="cookie-settings-btn" onclick="resetCookieConsent()">Nastavení cookies</button>
+                </div>
             </div>
         </div>
     </footer>
 
+    
+    <!-- Cookies Banner -->
+    <div class="cookie-banner" id="cookieBanner">
+        <div class="cookie-banner-inner">
+            <p class="cookie-banner-text">Tento web používá cookies pro zajištění funkčnosti a anonymní analytiku návštěvnosti. Více informací najdete v <a href="../zasady-cookies.html">zásadách cookies</a> a <a href="../ochrana-udaju.html">ochraně osobních údajů</a>.</p>
+            <div class="cookie-banner-actions">
+                <button class="cookie-btn cookie-btn-reject" onclick="setCookieConsent('rejected')">Pouze nezbytné</button>
+                <button class="cookie-btn cookie-btn-accept" onclick="setCookieConsent('accepted')">Přijmout vše</button>
+            </div>
+        </div>
+    </div>
     <script src="../js/main.js"></script>
     <!-- Vercel Analytics -->
     <script defer src="/_vercel/insights/script.js"></script>
