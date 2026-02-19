@@ -1673,9 +1673,12 @@ h3 {
 
 @media (max-width: 768px) {
 
-    .nav-links,
-    .nav-cta {
+    .nav-links {
         display: none;
+    }
+
+    .nav-cta {
+        display: none !important;
     }
 
     .hamburger {
