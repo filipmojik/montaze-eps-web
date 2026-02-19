@@ -1368,6 +1368,14 @@ h3 {
     border-radius: var(--radius-lg);
 }
 
+.floating-cta .btn .floating-cta-text {
+    display: inline;
+}
+
+.floating-cta .btn .floating-cta-icon {
+    display: none;
+}
+
 /* ===================================
    FOOTER
    =================================== */
@@ -1880,7 +1888,31 @@ h3 {
     }
 
     .floating-cta {
-        display: none !important;
+        bottom: 20px;
+        right: 16px;
+    }
+
+    .floating-cta .btn {
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 20px rgba(37, 99, 235, 0.4), 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .floating-cta .btn .floating-cta-text {
+        display: none;
+    }
+
+    .floating-cta .btn .floating-cta-icon {
+        display: block;
+    }
+
+    .floating-cta .btn > svg:first-child {
+        display: none;
     }
 
     .service-features-grid {
